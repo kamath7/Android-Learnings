@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickFunction(View view){
         System.out.println("I am being generated! Button is being clicked successfully!");
         Log.i("Info:","I am being generated! Button is being clicked successfully!");
+        Toast.makeText(getApplicationContext(),"You're clicking this successfully!",Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
