@@ -11,13 +11,13 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     public void clickFunction(View view) {
 
-        EditText usernameText = (EditText) findViewById(R.id.username);
-        EditText passwordText = (EditText) findViewById(R.id.password);
-
-        Log.i("Info:", "I am being generated! Button is being clicked successfully!");
-//        Toast.makeText(getApplicationContext(), "You're clicking this successfully!", Toast.LENGTH_SHORT).show();
-        Log.i("Values","You entered the following details - username: "+usernameText.getText().toString()+" password:"+passwordText.getText().toString());
-        Toast.makeText(getApplicationContext(), "You entered "+usernameText.getText().toString(),Toast.LENGTH_SHORT).show();
+//        EditText usernameText = (EditText) findViewById(R.id.username);
+//        EditText passwordText = (EditText) findViewById(R.id.password);
+//
+//        Log.i("Info:", "I am being generated! Button is being clicked successfully!");
+////        Toast.makeText(getApplicationContext(), "You're clicking this successfully!", Toast.LENGTH_SHORT).show();
+//        Log.i("Values","You entered the following details - username: "+usernameText.getText().toString()+" password:"+passwordText.getText().toString());
+//        Toast.makeText(getApplicationContext(), "You entered "+usernameText.getText().toString(),Toast.LENGTH_SHORT).show();
     }
 
     public void imageChange (View view){
