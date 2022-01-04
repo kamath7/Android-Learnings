@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "You entered "+usernameText.getText().toString(),Toast.LENGTH_SHORT).show();
     }
 
+    public void imageChange (View view){
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.image2);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
