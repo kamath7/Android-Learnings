@@ -1,7 +1,9 @@
 package com.kamathinc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -24,5 +26,22 @@ public class Main {
         System.out.println(list.get(1));
         list.remove(2);
         System.out.println(list.toString());
+
+        List favoriteFoods = new ArrayList();
+        favoriteFoods.add(0,"Palak Paneer");
+        favoriteFoods.add(1,"Paneer Pulav");
+        favoriteFoods.add(2,"Rasmalai");
+
+        System.out.println(favoriteFoods.toString());
+        favoriteFoods.remove(1);
+        System.out.println(favoriteFoods.toString());
+
+        Map map = new HashMap();
+        map.put("Captain","Dhoni");
+        map.put("Batsman","Rohit");
+        map.put("Bowler","Bumrah");
+        System.out.println(map.get("Captain"));
+        map.remove("Bowler");
+        System.out.println(map);
     }
 }
