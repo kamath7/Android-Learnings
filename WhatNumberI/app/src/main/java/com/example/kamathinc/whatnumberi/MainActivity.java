@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
         Number someNumber = new Number();
         someNumber.number = myNum;
-
-        if (someNumber.checkSquare()){
+        if(someNumber.checkTriangular() && someNumber.checkTriangular()){
+            Toast.makeText(getApplicationContext(),"Number is a triangular and a square number", Toast.LENGTH_SHORT).show();
+        }
+        else if (someNumber.checkSquare()){
             Toast.makeText(getApplicationContext(),"Number is a square number", Toast.LENGTH_SHORT).show();
         }else if (someNumber.checkTriangular()){
             Toast.makeText(getApplicationContext(),"Number is a triangular number", Toast.LENGTH_SHORT).show();
-        }else if(someNumber.checkTriangular() && someNumber.checkTriangular()){
-            Toast.makeText(getApplicationContext(),"Number is a triangular and a square number", Toast.LENGTH_SHORT).show();
-        }else{
+        } else{
             Toast.makeText(getApplicationContext(),"Number is a neither triangular nor a square number", Toast.LENGTH_SHORT).show();
         }
     }
