@@ -1,5 +1,8 @@
 package com.kamathinc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -27,5 +30,24 @@ public class Main {
         for (int i = 0 ; i <=10 ; i++){
             System.out.println((i*(i + 1))/2);
         }
+
+        String[] favoriteFootballers = {"Ronaldo","Vidic","Rooney"};
+        for (int j = 0 ; j < favoriteFootballers.length; j++){
+            System.out.println(favoriteFootballers[j]);
+        }
+
+        //Using forEach
+        for(String name: favoriteFootballers){
+            System.out.println(name);
+        }
+        List<String> myList = new ArrayList<String>();
+        myList.add(0, "Paneer butter masala");
+        myList.add(1, "Kulcha");
+        myList.add(2, "Cashewnut pulao");
+
+        for(String name: myList){
+            System.out.println(name);
+        }
+
     }
 }
