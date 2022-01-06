@@ -27,31 +27,39 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
-        public boolean checkSquare(){
-            if (Math.ceil((double) Math.sqrt(number)) == Math.floor((double) Math.sqrt(number)) ){
+        public boolean checkSquare() {
+            if (Math.ceil((double) Math.sqrt(number)) == Math.floor((double) Math.sqrt(number))) {
                 return true;
             }
             return false;
         }
     }
-    public void numberChecker(View view){
-        EditText myText = (EditText)findViewById(R.id.myNumber);
 
-        int myNum = Integer.parseInt(myText.getText().toString());
+    public void numberChecker(View view) {
+        EditText myText = (EditText) findViewById(R.id.myNumber);
 
-        Number someNumber = new Number();
-        someNumber.number = myNum;
-        if(someNumber.checkTriangular() && someNumber.checkTriangular()){
-            Toast.makeText(getApplicationContext(),"Number is a triangular and a square number", Toast.LENGTH_SHORT).show();
+
+        if (myText.getText().toString().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter a value!", Toast.LENGTH_SHORT).show();
+        } else {
+            int myNum = Integer.parseInt(myText.getText().toString());
+            Number someNumber = new Number();
+            someNumber.number = myNum;
+
+            if (someNumber.checkTriangular() && someNumber.checkTriangular()) {
+                Toast.makeText(getApplicationContext(), "Number is a triangular and a square number", Toast.LENGTH_SHORT).show();
+            } else if (someNumber.checkSquare()) {
+                Toast.makeText(getApplicationContext(), "Number is a square number", Toast.LENGTH_SHORT).show();
+            } else if (someNumber.checkTriangular()) {
+                Toast.makeText(getApplicationContext(), "Number is a triangular number", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Number is a neither triangular nor a square number", Toast.LENGTH_SHORT).show();
+            }
         }
-        else if (someNumber.checkSquare()){
-            Toast.makeText(getApplicationContext(),"Number is a square number", Toast.LENGTH_SHORT).show();
-        }else if (someNumber.checkTriangular()){
-            Toast.makeText(getApplicationContext(),"Number is a triangular number", Toast.LENGTH_SHORT).show();
-        } else{
-            Toast.makeText(getApplicationContext(),"Number is a neither triangular nor a square number", Toast.LENGTH_SHORT).show();
-        }
+
+
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
