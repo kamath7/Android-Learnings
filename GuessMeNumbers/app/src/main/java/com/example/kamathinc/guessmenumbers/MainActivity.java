@@ -8,9 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    int randomNum = (int) (Math.random() * (10-1+1))+1;
+    int randomNum = generateRandomNumber();
 
-
+    public int generateRandomNumber(){
+        return (int) (Math.random() * (10-1+1))+1;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else if (randomNum == guessNumberInInteger){
             Toast.makeText(getApplicationContext(), "Guessed it right! Number has now been reset", Toast.LENGTH_SHORT).show();
-            randomNum = (int) (Math.random() * (10-1+1))+1;
+            randomNum = generateRandomNumber();
         }
     }
 }
