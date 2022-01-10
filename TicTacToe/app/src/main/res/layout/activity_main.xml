@@ -26,15 +26,17 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="0" />
 
         <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:layout_marginLeft="17dp"
-       android:onClick="dropIn"/>
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="17dp"
+            android:onClick="dropIn"
+            android:tag="1" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -42,14 +44,17 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="12dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="2" />
+
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginTop="13dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="3" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -58,7 +63,8 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="13dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="4" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -67,7 +73,8 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="13dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="5" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -75,7 +82,8 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="6" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -84,7 +92,8 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="13dp"
-           android:onClick="dropIn"/>
+            android:onClick="dropIn"
+            android:tag="7" />
 
         <ImageView
             android:id="@+id/imageView9"
@@ -93,7 +102,8 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="16dp"
-            android:onClick="dropIn" />
+            android:onClick="dropIn"
+            android:tag="8" />
     </GridLayout>
 
 </android.support.constraint.ConstraintLayout>
