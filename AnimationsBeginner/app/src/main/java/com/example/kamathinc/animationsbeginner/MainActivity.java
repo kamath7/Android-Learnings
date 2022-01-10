@@ -16,23 +16,31 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageView1 = findViewById(R.id.imageView1);
 
 
-        if (isPeterAlive == false){
+//        if (isPeterAlive == false){
+//
+//            imageView.animate().alpha(0).setDuration(2000);
+//            imageView1.animate().alpha(1).setDuration(2000);
+//            isPeterAlive = true;
+//        }else{
+//            //Fade out effect
+//            imageView1.animate().alpha(0).setDuration(2000);
+//            imageView.animate().alpha(1).setDuration(2000);
+//            isPeterAlive = false;
+//
+//        }
+//        imageView.animate().translationXBy(-1000).setDuration(2000);
+//        imageView.animate().rotation(180).alpha(0).setDuration(1000);
 
-            imageView.animate().alpha(0).setDuration(2000);
-            imageView1.animate().alpha(1).setDuration(2000);
-            isPeterAlive = true;
-        }else{
-            //Fade out effect
-            imageView1.animate().alpha(0).setDuration(2000);
-            imageView.animate().alpha(1).setDuration(2000);
-            isPeterAlive = false;
+//        imageView.animate().scaleX((float)0.5).scaleY((float)0.5).setDuration(1000);
 
-        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageView imageView = findViewById(R.id.imageView);
+        imageView.animate().translationXBy(-1000);
+        imageView.animate().translationXBy(1000).rotation(3600).setDuration(3000);
     }
 }
