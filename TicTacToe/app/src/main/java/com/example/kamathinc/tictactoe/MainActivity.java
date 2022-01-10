@@ -1,10 +1,12 @@
 package com.example.kamathinc.tictactoe;
 
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,12 +61,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public void playAgain(View view){
+
+    public void playAgain(View view) {
         Button playAgain = findViewById(R.id.playAgainButton);
         TextView winnerText = findViewById(R.id.winnerText);
         playAgain.setVisibility(View.INVISIBLE);
         winnerText.setVisibility(View.INVISIBLE);
-
+        GridLayout gridLayout = findViewById(R.id.gridLayout);
+        //Below code loops through all the grid layout and remove the image source
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            ImageView counter = (ImageView) gridLayout.getChildAt(i);
+            counter.setImageDrawable(null);
+        }
+        activePlayer = 0;
+        gameActive = true;
+        for (int j = 0; j < gameState.length; j++) {
+            gameState[j] = 2;
+        }
     }
 
     @Override
