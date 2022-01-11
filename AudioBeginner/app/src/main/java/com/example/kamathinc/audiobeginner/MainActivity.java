@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
@@ -52,5 +55,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        final SeekBar scrubControl = findViewById(R.id.seekBar1);
+        scrubControl.setMax(mediaPlayer.getDuration()); //timeline of the audio
+
+        scrubControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.i("Scrub changed",Integer.toString(i));
+                mediaPlayer.seekTo(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                scrubControl.setProgress(mediaPlayer.getCurrentPosition());
+            }
+        },0,300);
     }
 }
