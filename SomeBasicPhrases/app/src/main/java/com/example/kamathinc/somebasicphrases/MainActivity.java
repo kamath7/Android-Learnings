@@ -2,9 +2,15 @@ package com.example.kamathinc.somebasicphrases;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-
+    public void playPhrase(View view){
+        Button buttonPressed = (Button)view;
+        Log.i("Button pressed ", buttonPressed.getTag().toString() );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
