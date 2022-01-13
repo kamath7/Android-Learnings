@@ -2,10 +2,16 @@ package com.example.kamathinc.listviewsbeginner;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,15 +21,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ListView listView = findViewById(R.id.myListView);
-        ArrayList<String> myFamilyMembers = new ArrayList<String>();
 
-        myFamilyMembers.add("Ronaldo");
-        myFamilyMembers.add("Rooney");
-        myFamilyMembers.add("Roy Keane");
-        myFamilyMembers.add("Nemanja Vidic");
+        final ArrayList<String> myFavFood = new ArrayList<String>();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myFamilyMembers); //simple_list_item_1 is a type of view for the list
-        listView.setAdapter(arrayAdapter);
+        myFavFood.add("Palak Paneer");
+        myFavFood.add("Paneer Pulao");
+        myFavFood.add("Prawns Masala");
+        myFavFood.add("Rasmalai");
+
+        ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myFavFood);
+
+        listView.setAdapter(myArrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this, "You clicked on "+myFavFood.get(i), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
