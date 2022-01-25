@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -12,9 +13,15 @@ public class MainActivity extends AppCompatActivity {
 
     TextView timerTextView;
     SeekBar timerSeekBar;
+    Boolean activeTimer = false;
+    Button timerButton;
 
     public void buttonClicked(View view) {
         //max timer is user put time *  1000 .meaning 10 mins and interval of 1 second
+        activeTimer = true;
+        timerSeekBar.setEnabled(false);
+        timerButton.setText("STOP");
+        
         CountDownTimer countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
             @Override
             public void onTick(long l) {
@@ -47,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         timerSeekBar = findViewById(R.id.timerSeekBar);
         timerTextView = findViewById(R.id.timerTextView);
+        timerButton = findViewById(R.id.timerButton);
+
 
         int max = 600; //max 10 mins. 10 * 60
 
