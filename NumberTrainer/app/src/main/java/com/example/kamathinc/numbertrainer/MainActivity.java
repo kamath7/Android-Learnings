@@ -33,5 +33,21 @@ public class MainActivity extends AppCompatActivity {
         int b = random.nextInt(26);
 
         problemText.setText(Integer.toString(a) + "+" + Integer.toString(b));
+
+        int correctAnswerIndex = random.nextInt(4);
+
+        for (int i = 0 ; i < 4 ; i ++){
+            //Why 4? Because 4 answers
+            if ( i == correctAnswerIndex){
+                answers.add(a+b);
+            }else{
+                int wrongAnswer = random.nextInt(26);
+                while(wrongAnswer == a+b){
+                    wrongAnswer = random.nextInt(26);
+                }
+                answers.add(wrongAnswer);
+            }
+
+        }
     }
 }
