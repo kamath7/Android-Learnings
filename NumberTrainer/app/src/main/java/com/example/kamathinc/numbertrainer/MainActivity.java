@@ -1,5 +1,6 @@
 package com.example.kamathinc.numbertrainer;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     TextView problemText;
     TextView resultText;
     TextView scoreText;
+    TextView timerText;
     ArrayList<Integer> answers = new ArrayList<Integer>();
     int correctAnswerIndex;
     int score = 0 ;
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             resultText.setText("Incorrect! 😤");
         }
         questionCount++;
-
         scoreText.setText(Integer.toString(score)+"/"+Integer.toString(questionCount));
+        newQuestion();
     }
 
     public void newQuestion(){
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         problemText.setText(Integer.toString(a) + "+" + Integer.toString(b));
 
         correctAnswerIndex = random.nextInt(4);
+
+        answers.clear();
 
         for (int i = 0; i < 4; i++) {
             //Why 4? Because 4 answers
@@ -84,7 +88,18 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         resultText = findViewById(R.id.resultText);
         scoreText = findViewById(R.id.scoreText);
+        timerText = findViewById(R.id.timerText);
 
         newQuestion();
+
+        new CountDownTimer(30100, 1000){
+            @Override
+            public void onTick(long l){
+                timerText.setText(String.valueOf( l/1000) + "s");
+            }
+            public void onFinish(){
+                resultText.setText("You are done!. Total score: "+score +"/"+questionCount);
+            }
+        }.start();
     }
 }
