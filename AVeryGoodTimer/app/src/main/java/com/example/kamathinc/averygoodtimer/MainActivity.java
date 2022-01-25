@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 int seconds = i - (minutes * 60);
                 String secondsStr = Integer.toString(seconds);
 
-                if (secondsStr == "0" ){
+                if (secondsStr.equals("0") ){
                     secondsStr = "00";
                 }
                 timerTextView.setText(Integer.toString(minutes)+ ":"+ secondsStr);
