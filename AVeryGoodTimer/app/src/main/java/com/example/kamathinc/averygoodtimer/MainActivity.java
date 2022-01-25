@@ -10,9 +10,10 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     TextView timerTextView;
+    SeekBar timerSeekBar;
     public void buttonClicked(View view){
-        //max timer is 10000 meaning 10 mins and interval of 1 second
-        CountDownTimer countDownTimer = new CountDownTimer(10000, 1000)  {
+        //max timer is user put time *  1000 .meaning 10 mins and interval of 1 second
+        CountDownTimer countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000, 1000)  {
             @Override
             public void onTick(long l) {
                 updateTimer((int)l/1000);
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                
+
             }
         }.start();
     }
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         int seconds = secondsLeft - (minutes * 60);
         String secondsStr = Integer.toString(seconds);
 
-        if (secondsStr.equals("0") ){
-            secondsStr = "00";
+        if (seconds <=9  ){
+            secondsStr = "0"+secondsStr;
         }
         timerTextView.setText(Integer.toString(minutes)+ ":"+ secondsStr);
     }
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SeekBar timerSeekBar = findViewById(R.id.timerSeekBar);
+         timerSeekBar = findViewById(R.id.timerSeekBar);
         timerTextView = findViewById(R.id.timerTextView);
 
         int max = 600; //max 10 mins. 10 * 60
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                updateTimer();
+                updateTimer(i);
             }
 
             @Override
