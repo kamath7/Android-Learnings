@@ -1,6 +1,7 @@
 package com.example.kamathinc.numbertrainer;
 
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,10 +18,12 @@ public class MainActivity extends AppCompatActivity {
     Button button1;
     Button button2;
     Button button3;
+    Button playAgainButton;
     TextView problemText;
     TextView resultText;
     TextView scoreText;
     TextView timerText;
+    ConstraintLayout gameScreen;
     ArrayList<Integer> answers = new ArrayList<Integer>();
     int correctAnswerIndex;
     int score = 0 ;
@@ -28,6 +31,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void gameStart(View view) {
         startButton.setVisibility(View.INVISIBLE);
+        gameScreen.setVisibility(View.VISIBLE);
+        playAgain(timerText); //View doesn't matter here since we don't use anything
+
+    }
+    public void playAgain(View view){
+        score = 0;
+        questionCount = 0;
+        timerText.setText("30s");
+        scoreText.setText(Integer.toString(score)+"/"+Integer.toString(questionCount));
+        playAgainButton.setVisibility(View.INVISIBLE);
+        newQuestion();
+        new CountDownTimer(30100, 1000){
+            @Override
+            public void onTick(long l){
+                timerText.setText(String.valueOf( l/1000) + "s");
+            }
+            public void onFinish(){
+                resultText.setText("You are done!. Total score: "+score +"/"+questionCount);
+                playAgainButton.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
 
     public void answerGen(View view){
@@ -89,17 +113,12 @@ public class MainActivity extends AppCompatActivity {
         resultText = findViewById(R.id.resultText);
         scoreText = findViewById(R.id.scoreText);
         timerText = findViewById(R.id.timerText);
+        playAgainButton = findViewById(R.id.playAgainButton);
+        gameScreen = findViewById(R.id.gameScreen);
 
-        newQuestion();
+        startButton.setVisibility(View.VISIBLE);
+        gameScreen.setVisibility(View.INVISIBLE);
 
-        new CountDownTimer(30100, 1000){
-            @Override
-            public void onTick(long l){
-                timerText.setText(String.valueOf( l/1000) + "s");
-            }
-            public void onFinish(){
-                resultText.setText("You are done!. Total score: "+score +"/"+questionCount);
-            }
-        }.start();
+
     }
 }
