@@ -40,20 +40,7 @@ public class MainActivity extends AppCompatActivity {
         scoreText.setText(Integer.toString(score)+"/"+Integer.toString(questionCount));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        startButton = findViewById(R.id.goButton);
-        problemText = findViewById(R.id.problemText);
-        button0 = findViewById(R.id.button0);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-        resultText = findViewById(R.id.resultText);
-        scoreText = findViewById(R.id.scoreText);
-
+    public void newQuestion(){
         Random random = new Random();
 
         int a = random.nextInt(26);
@@ -61,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         problemText.setText(Integer.toString(a) + "+" + Integer.toString(b));
 
-         correctAnswerIndex = random.nextInt(4);
+        correctAnswerIndex = random.nextInt(4);
 
         for (int i = 0; i < 4; i++) {
             //Why 4? Because 4 answers
@@ -81,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
         button2.setText(Integer.toString(answers.get(2)));
         button3.setText(Integer.toString(answers.get(3)));
 
+    }
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        startButton = findViewById(R.id.goButton);
+        problemText = findViewById(R.id.problemText);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        resultText = findViewById(R.id.resultText);
+        scoreText = findViewById(R.id.scoreText);
+
+        newQuestion();
     }
 }
