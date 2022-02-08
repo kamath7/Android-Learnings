@@ -3,6 +3,7 @@ package com.example.kamathinc.downloadwebthings;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            Log.i("URL : ",strings[0]);
             return "Done!";
         }
     }
@@ -20,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Downloader downloader = new Downloader();
-        downloader.execute("http://zappycode.com");
+        String result = null;
+        try{
+            result =  downloader.execute("http://zappycode.com").get();
+
+        }
+        catch(Exception e){
+            Log.i("Error", "Error "+e.getStackTrace() );
+        }
+
+        Log.i("Result - ", result);
     }
 }
