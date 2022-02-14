@@ -3,6 +3,8 @@ package com.example.kamathinc.userlocationmaps;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +22,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -75,6 +81,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng userLoc = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLoc).title("Marker in "+location.getProvider()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc));
+
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                  List<Address> addressList =  geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if(addressList != null && addressList.size() > 0){
+
+                        String address = " ";
+                        if(addressList.get(0).getAdminArea() != null){
+                            address += addressList.get(0).getAdminArea()+" ";
+                        }
+                        if(addressList.get(0).getLocality() != null){
+                            address += addressList.get(0).getLocality()+" ";
+                        }
+                        if(addressList.get(0).getAddressLine(0) != null){
+                            address += addressList.get(0).getAddressLine(0)+" ";
+                        }
+                        if(addressList.get(0).getSubAdminArea() != null){
+                            address += addressList.get(0).getSubAdminArea()+" ";
+                        }
+                        if(addressList.get(0).getCountryName() != null){
+                            address += addressList.get(0).getCountryName()+" ";
+                        }
+                        if(addressList.get(0).getPostalCode() != null){
+                            address += addressList.get(0).getPostalCode()+" ";
+                        }
+
+                        Log.i("Address", address);
+
+                        Toast.makeText(MapsActivity.this, address, Toast.LENGTH_SHORT).show();
+//                        Log.i("Address list", addressList.toString());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
