@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Downloader downloader = new Downloader();
         try{
             String encodedCityName = URLEncoder.encode(cityName.getText().toString());
-            downloader.execute("https://api.openweathermap.org/data/2.5/weather?q="+encodedCityName+"&appid=2c5677fecbb40ee8ae1df7f5784ceca8").get();
+            downloader.execute("https://api.openweathermap.org/data/2.5/weather?q="+encodedCityName+"&appid=rnadom").get();
 
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); // for making the keyboard go down
 
