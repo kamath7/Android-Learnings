@@ -9,7 +9,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goScreen(View view){
         Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
-
+        intent.putExtra("age", 25); //to share infor
         startActivity(intent);
     }
 
