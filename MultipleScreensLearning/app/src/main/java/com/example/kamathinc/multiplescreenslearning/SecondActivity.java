@@ -8,8 +8,11 @@ import android.view.View;
 public class SecondActivity extends AppCompatActivity {
 
     public void goBack(View view){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        startActivity(intent);
+        //alternate
+
+        finish();
     }
 
     @Override
