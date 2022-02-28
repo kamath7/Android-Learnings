@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
        altTextView = findViewById(R.id.altTextView);
        addTextView = findViewById(R.id.addressTextView);
 
-       latTextView.setText("Latitude: "+ Double.toString(location.getLatitude()));
-       lonTextView.setText("Longitude: "+ Double.toString(location.getLongitude()));
-       accTextView.setText("Accuracy: "+ Double.toString(location.getAccuracy()));
-       altTextView.setText("Altitude: "+ Double.toString(location.getAltitude()));
+       latTextView.setText("Latitude: "+ Double.toString( Math.round(location.getLatitude() * 100)/100));
+       lonTextView.setText("Longitude: "+ Double.toString(Math.round(location.getLongitude() * 100)/100));
+       accTextView.setText("Accuracy: "+ Double.toString(Math.round(location.getAccuracy() * 100)/100));
+       altTextView.setText("Altitude: "+ Double.toString(Math.round(location.getAltitude() * 100)/100));
 
        String address = "Couldn't find address 😕";
 
