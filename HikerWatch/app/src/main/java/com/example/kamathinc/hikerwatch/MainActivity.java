@@ -52,8 +52,12 @@ public class MainActivity extends AppCompatActivity {
             Location lastLocation =  locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             if(lastLocation != null){
-
+                updateLocationInfo(lastLocation);
             }
         }
+    }
+
+    public void updateLocationInfo(Location location){
+        Log.i("Location Info",location.toString());
     }
 }
