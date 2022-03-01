@@ -1,11 +1,15 @@
 package com.example.kamathinc.favoriteplaces;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -25,11 +29,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationListener locationListener;
 
 
-    public void centerMapOnUserLoc(Location location, String title){
+    public void centerMapOnUserLoc(Location location, String title) {
         LatLng userLoc = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(userLoc).title(title));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc,7));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc, 7));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                centerMapOnUserLoc(lastLocation, "Current Location👇");
+            }
+        }
     }
 
     @Override
@@ -60,13 +77,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        Toast.makeText(getApplicationContext(), Integer.toString(intent.getIntExtra("placeId",0)), Toast.LENGTH_SHORT).show();
 
 
-        if (intent.getIntExtra("placeId",0) == 0){
+        if (intent.getIntExtra("placeId", 0) == 0) {
             //move to user loc
             locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    centerMapOnUserLoc(location,"Current Location👇");
+                    centerMapOnUserLoc(location, "Current Location👇");
                 }
 
                 @Override
@@ -84,10 +101,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
             };
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                Location lastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                centerMapOnUserLoc(lastLocation, "Current Location👇");
+
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+            }
         }
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
 }
