@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
 
         ArrayList<String> favPlaces = new ArrayList<String>();
+        favPlaces.add("Enter place");
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favPlaces);
 
