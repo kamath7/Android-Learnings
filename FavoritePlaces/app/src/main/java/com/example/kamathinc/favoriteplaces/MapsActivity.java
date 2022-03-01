@@ -1,8 +1,14 @@
 package com.example.kamathinc.favoriteplaces;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Camera;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +21,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    LocationManager locationManager;
+    LocationListener locationListener;
+
+
+    public void centerMapOnUserLoc(Location location, String title){
+        LatLng userLoc = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(userLoc).title(title));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc,7));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +57,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         Intent intent = getIntent();
-        Toast.makeText(getApplicationContext(), Integer.toString(intent.getIntExtra("placeId",0)), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), Integer.toString(intent.getIntExtra("placeId",0)), Toast.LENGTH_SHORT).show();
 
+
+        if (intent.getIntExtra("placeId",0) == 0){
+            //move to user loc
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    centerMapOnUserLoc(location,"Current Location👇");
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            };
+        }
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
