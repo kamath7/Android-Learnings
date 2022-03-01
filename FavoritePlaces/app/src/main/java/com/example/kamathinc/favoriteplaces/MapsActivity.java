@@ -122,6 +122,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }else{
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
             }
+        }else{
+            Location someLoc = new Location(LocationManager.NETWORK_PROVIDER);
+            someLoc.setLatitude(MainActivity.locations.get(intent.getIntExtra("placeId", 0)).latitude);
+            someLoc.setLongitude(MainActivity.locations.get(intent.getIntExtra("placeId", 0)).longitude);
+
+            centerMapOnUserLoc(someLoc, MainActivity.favPlaces.get(intent.getIntExtra("placeId", 0)));
+
         }
 
     }
@@ -150,5 +157,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             address+= simpleDateFormat.format(new Date());
         }
         mMap.addMarker(new MarkerOptions().position(latLng).title("Your new place! "));
+
+        MainActivity.favPlaces.add(address);
+        MainActivity.locations.add(latLng);
+
+        MainActivity.arrayAdapter.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(), "Location added!", Toast.LENGTH_SHORT).show();
     }
 }

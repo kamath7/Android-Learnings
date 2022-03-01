@@ -9,11 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
+    static ArrayList<String> favPlaces;
+    static ArrayList<LatLng> locations;
+    static ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.listView);
 
-        ArrayList<String> favPlaces = new ArrayList<String>();
-        favPlaces.add("Enter place");
+        favPlaces = new ArrayList<String>();
+        locations = new ArrayList<LatLng>();
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favPlaces);
+        favPlaces.add("Enter place");
+        locations.add(new LatLng(12, 73));
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favPlaces);
 
         listView.setAdapter(arrayAdapter);
 
@@ -33,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(MainActivity.this, Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("placeId", position);
 
                 startActivity(intent);
