@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> latitudes = new ArrayList<>();
         ArrayList<String> longitudes = new ArrayList<>();
 
+        favPlaces.clear();
+        latitudes.clear();
+        longitudes.clear();
+        locations.clear();
+
        try{
 
            favPlaces = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("places", ObjectSerializer.serialize(new ArrayList<String>())));
@@ -42,13 +47,23 @@ public class MainActivity extends AppCompatActivity {
            e.printStackTrace();
        }
 
+        if (favPlaces.size() > 0 && latitudes.size() > 0 && longitudes.size() > 0 ){
+           if (favPlaces.size() == latitudes.size() && favPlaces.size() == longitudes.size()){
+               for(int i = 0 ; i < latitudes.size() ; i++){
+                    locations.add(new LatLng(Double.parseDouble(latitudes.get(i)), Double.parseDouble(longitudes.get(i))));
+               }
+           }
+        }else{
+            favPlaces.add("Enter place");
+            locations.add(new LatLng(12, 73));
+        }
+
         listView = findViewById(R.id.listView);
 
         favPlaces = new ArrayList<String>();
         locations = new ArrayList<LatLng>();
 
-        favPlaces.add("Enter place");
-        locations.add(new LatLng(12, 73));
+
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, favPlaces);
 
         listView.setAdapter(arrayAdapter);
