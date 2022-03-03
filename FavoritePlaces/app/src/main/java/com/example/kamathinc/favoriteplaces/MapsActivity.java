@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -165,12 +166,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MainActivity.arrayAdapter.notifyDataSetChanged();
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.kamathinc.favoriteplaces", Context.MODE_PRIVATE);
+
         try{
+            ArrayList<String> latitudes = new ArrayList<>();
+            ArrayList<String> longitudes = new ArrayList<>();
+
+            for (LatLng cords : MainActivity.locations){
+                latitudes.add(Double.toString(cords.latitude));
+                longitudes.add(Double.toString(cords.longitude));
+            }
             sharedPreferences.edit().putString("places",ObjectSerializer.serialize(MainActivity.favPlaces)).apply();
+            sharedPreferences.edit().putString("Latitudes",ObjectSerializer.serialize(latitudes)).apply();
+            sharedPreferences.edit().putString("Longitudes",ObjectSerializer.serialize(longitudes)).apply();
         }catch(Exception e){
             e.printStackTrace();
         }
-
         Toast.makeText(getApplicationContext(), "Location added!", Toast.LENGTH_SHORT).show();
     }
 }
