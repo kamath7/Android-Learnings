@@ -3,6 +3,7 @@ package com.example.kamathinc.favoriteplaces;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.location.Address;
@@ -162,6 +163,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MainActivity.locations.add(latLng);
 
         MainActivity.arrayAdapter.notifyDataSetChanged();
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.kamathinc.favoriteplaces", Context.MODE_PRIVATE);
+        try{
+            sharedPreferences.edit().putString("places",ObjectSerializer.serialize(MainActivity.favPlaces)).apply();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         Toast.makeText(getApplicationContext(), "Location added!", Toast.LENGTH_SHORT).show();
     }
