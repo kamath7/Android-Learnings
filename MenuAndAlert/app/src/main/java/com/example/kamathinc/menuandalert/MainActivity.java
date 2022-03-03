@@ -12,8 +12,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
+    SharedPreferences sharedPreferences
     public  void setLanguage(String language){
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.kamathinc.menuandaler", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("language",language).apply();
         textView.setText("Language set to "+language);
     }
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = this.getSharedPreferences("com.example.kamathinc.menuandaler", Context.MODE_PRIVATE);
 
         textView = findViewById(R.id.textView);
 
