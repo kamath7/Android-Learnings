@@ -1,6 +1,8 @@
 package com.example.kamathinc.favoriteplaces;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.kamathinc.favoriteplaces", Context.MODE_PRIVATE);
+
+        ArrayList<String> latitudes = new ArrayList<>();
+        ArrayList<String> longitudes = new ArrayList<>();
+
+       try{
+
+           favPlaces = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("places", ObjectSerializer.serialize(new ArrayList<String>())));
+           latitudes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Latitudes", ObjectSerializer.serialize(new ArrayList<String>())));
+           longitudes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Longitudes", ObjectSerializer.serialize(new ArrayList<String>())));
+
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+
         listView = findViewById(R.id.listView);
 
         favPlaces = new ArrayList<String>();
