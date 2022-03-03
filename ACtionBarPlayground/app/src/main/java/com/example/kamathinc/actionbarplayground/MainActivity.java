@@ -2,8 +2,10 @@ package com.example.kamathinc.actionbarplayground;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +16,24 @@ public class MainActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.main_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Log.i("Info", "settings clicked");
+                return true;
+            case R.id.help:
+                Log.i("Info", "help clicked");
+                return true;
+
+        }
+        return false;
     }
 
     @Override
