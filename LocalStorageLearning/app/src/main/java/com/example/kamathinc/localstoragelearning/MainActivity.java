@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,23 @@ public class MainActivity extends AppCompatActivity {
         myFavFoods.add("Aloo Pakoda");
         myFavFoods.add("Rasmalai");
 
-        sharedPreferences.
+        try {
+            ;
+            sharedPreferences.edit().putString("Food list",ObjectSerializer.serialize(myFavFoods)).apply();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> newFood = new ArrayList<String>();
+
+        try {
+            newFood = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("Food list",ObjectSerializer.serialize(new ArrayList<String>())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.i("New food", newFood.toString());
 
     }
 }
