@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
             sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shwetha', 28) ");
             sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shreya', 18) ");
+            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Maya', 20) ");
 
-            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE name LIKE  '%e%' ",null);
+            sqLiteDatabase.execSQL("DELETE FROM user WHERE name = 'Maya' ");
+            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE name LIKE  '%e%' LIMIT 1",null);
 
             int movieNameIndex = newCursor.getColumnIndex("name");
             int movieYearIndex = newCursor.getColumnIndex("age");
