@@ -3,6 +3,7 @@ package com.example.kamathinc.mynewsreader;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
+        DownloadTask downloadTask = new DownloadTask();
+        try{
+            downloadTask.execute("https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String>{
@@ -53,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                     result += current;
                     data = inputStreamReader.read();
                 }
+
+                Log.i("URL Content", result );
+                return result;
             }catch(Exception e){
                 e.printStackTrace();
             }
