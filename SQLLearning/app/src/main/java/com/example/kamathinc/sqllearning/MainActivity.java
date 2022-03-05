@@ -63,5 +63,30 @@ public class MainActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        try{
+            SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("users", MODE_PRIVATE, null);
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INT (3))");
+
+            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shwetha', 28) ");
+            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shreya', 18) ");
+
+            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE age > 18",null);
+
+            int movieNameIndex = newCursor.getColumnIndex("name");
+            int movieYearIndex = newCursor.getColumnIndex("age");
+
+            newCursor.moveToFirst();
+
+            while(newCursor!= null){
+                Log.i("SQL Query Movie ", newCursor.getString(movieNameIndex));
+                Log.i("SQL Query release year", newCursor.getString(movieYearIndex));
+                newCursor.moveToNext();
+            }
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
