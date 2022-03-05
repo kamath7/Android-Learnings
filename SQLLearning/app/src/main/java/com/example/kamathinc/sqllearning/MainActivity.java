@@ -13,25 +13,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SQLiteDatabase myDb = this.openOrCreateDatabase("Books",MODE_PRIVATE, null);
+        try{
+            SQLiteDatabase myDb = this.openOrCreateDatabase("Books",MODE_PRIVATE, null);
 
-        myDb.execSQL("CREATE TABLE IF NOT EXISTS books (name VARCHAR, author VARCHAR)");
-        myDb.execSQL("INSERT INTO books (name,author) VALUES ('And Then There Were None', 'Agatha Christie')");
-        myDb.execSQL("INSERT INTO books (name,author) VALUES ('Master of the game', 'Sidney Sheldon')");
+            myDb.execSQL("CREATE TABLE IF NOT EXISTS books (name VARCHAR, author VARCHAR)");
+            myDb.execSQL("INSERT INTO books (name,author) VALUES ('And Then There Were None', 'Agatha Christie')");
+            myDb.execSQL("INSERT INTO books (name,author) VALUES ('Master of the game', 'Sidney Sheldon')");
 
-        Cursor cursor = myDb.rawQuery("SELECT * FROM books",null);
+            Cursor cursor = myDb.rawQuery("SELECT * FROM books",null);
 
-        int nameIndex = cursor.getColumnIndex("name");
-        int authorIndex = cursor.getColumnIndex("author");
+            int nameIndex = cursor.getColumnIndex("name");
+            int authorIndex = cursor.getColumnIndex("author");
 
-        cursor.moveToFirst();
+            cursor.moveToFirst();
 
-        while (cursor !=null){
+            while (cursor !=null){
 
-            Log.i("SQL Query-Name", cursor.getString(nameIndex));
-            Log.i("SQL Query-Author", cursor.getString(authorIndex));
+                Log.i("SQL Query-Name", cursor.getString(nameIndex));
+                Log.i("SQL Query-Author", cursor.getString(authorIndex));
 
-            cursor.moveToNext();
+                cursor.moveToNext();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
