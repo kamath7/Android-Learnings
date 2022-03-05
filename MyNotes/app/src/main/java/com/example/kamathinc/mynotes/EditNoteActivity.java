@@ -10,6 +10,7 @@ import android.widget.EditText;
 public class EditNoteActivity extends AppCompatActivity {
 
     EditText editText;
+    int noteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +21,12 @@ public class EditNoteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        final int noteId = intent.getIntExtra("noteId",-1);
+        noteId = intent.getIntExtra("noteId",-1);
         if(noteId != -1 ){
             editText.setText(MainActivity.notes.get(noteId));
+        }else {
+            MainActivity.notes.add("");
+            noteId = MainActivity.notes.size() - 1;
         }
 
         editText.addTextChangedListener(new TextWatcher() {
