@@ -1,5 +1,8 @@
 package com.example.kamathinc.mynewsreader;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,10 +26,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> newsTitles = new ArrayList<String>();
     ArrayAdapter arrayAdapter;
 
+    SQLiteDatabase articleStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        articleStorage = this.openOrCreateDatabase("Articles", Context.MODE_PRIVATE, null);
+        articleStorage.execSQL("CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, articleId INTEGER, articleTitle VARCHAR, articleURL VARCHAR) ");
+
 
         listView = findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, newsTitles);
@@ -95,11 +103,28 @@ public class MainActivity extends AppCompatActivity {
                         if (!jsonObject.isNull("title") && !jsonObject.isNull("url")) {
                             String articleTitle = jsonObject.getString("title");
                             String articleUrl = jsonObject.getString("url");
+//Below is performance degrading. Using url instead
+//                            url = new URL(articleUrl);
+//                            httpURLConnection = (HttpURLConnection) url.openConnection();
+//                            inputStream = httpURLConnection.getInputStream();
+//                            inputStreamReader = new InputStreamReader(inputStream);
+//                            data = inputStreamReader.read();
+//
+//                            String articleContent = "";
+//                            while(data != -1){
+//                                char current = (char)data;
+//                                articleContent += current;
+//                                data = inputStreamReader.read();
+//                            }
+////                            Log.i("HTML Contnet", articleContent);
+////                        Log.i("Title and URL", articleTitle+" "+articleUrl);
 
-                        Log.i("Title and URL", articleTitle+" "+articleUrl);
-
-                    }else{
-                        Log.i("Title and URL", "nothing found!");
+                          String sqlQuery = "INSERT INTO articles (articleId, articleTitle, articleURL) VALUES(?,?,?)";
+                            SQLiteStatement statement = articleStorage.compileStatement(sqlQuery);
+                            statement.bindString(1, articleId);
+                            statement.bindString(2, articleTitle);
+                            statement.bindString(3, articleUrl);
+                            statement.execute();
                     }
                 }
 
