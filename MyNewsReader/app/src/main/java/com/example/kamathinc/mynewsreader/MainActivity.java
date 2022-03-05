@@ -1,6 +1,7 @@
 package com.example.kamathinc.mynewsreader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -8,6 +9,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -39,18 +42,28 @@ public class MainActivity extends AppCompatActivity {
         articleStorage.execSQL("CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, articleId INTEGER, articleTitle VARCHAR, articleURL VARCHAR) ");
 
 
+
+
+        DownloadTask downloadTask = new DownloadTask();
+        try{
+//            downloadTask.execute("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         listView = findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, newsTitles);
 
         listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), NewsReadActivity.class);
+                intent.putExtra("url",newUrls.get(position));
+                startActivity(intent);
+            }
+        });
         updateListView();
 
-        DownloadTask downloadTask = new DownloadTask();
-        try{
-            downloadTask.execute("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
     }
 
@@ -69,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 newsTitles.add(c.getString(titleIndex));
                 newUrls.add(c.getString(urlIndex));
 
-            }while(c.moveToFirst());
+            }while(c.moveToNext());
 
             arrayAdapter.notifyDataSetChanged();
 
@@ -101,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 JSONArray jsonArray = new JSONArray(result);
-                int articleLimit = 17;
+                int articleLimit = 5;
 
-                if (jsonArray.length() < 17 ){
+                if (jsonArray.length() < 5 ){
                     articleLimit = jsonArray.length();
                 }
                 articleStorage.execSQL("DELETE FROM articles"); //clearing
