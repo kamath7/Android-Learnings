@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    ArrayList<String> notes = new ArrayList<String>();
+    static ArrayList<String> notes = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
