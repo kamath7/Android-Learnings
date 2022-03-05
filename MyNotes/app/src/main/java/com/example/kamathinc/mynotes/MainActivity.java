@@ -1,7 +1,9 @@
 package com.example.kamathinc.mynotes;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 notes.remove(itemToDeleteIndex);
                                 arrayAdapter.notifyDataSetChanged();
+
+                                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.kamathinc.mynotes", Context.MODE_PRIVATE);
+                                HashSet<String> hashSet = new HashSet<>(MainActivity.notes);
+                                sharedPreferences.edit().putStringSet("notes",hashSet).apply();
                             }
                         })
                         .setNegativeButton("No", null).show();
