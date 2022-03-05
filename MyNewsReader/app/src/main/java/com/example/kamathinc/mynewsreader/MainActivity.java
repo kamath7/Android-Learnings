@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         DownloadTask downloadTask = new DownloadTask();
         try{
-            downloadTask.execute("https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty");
+            downloadTask.execute("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -65,15 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 JSONArray jsonArray = new JSONArray(result);
-                int articleLimit = 17;
+                int articleLimit = 5;
 
-                if (jsonArray.length() < 17 ){
+                if (jsonArray.length() < 5 ){
                     articleLimit = jsonArray.length();
                 }
 
                 for (int  i =0 ; i < articleLimit;  i++){
                     String articleId = jsonArray.getString(i);
                     url = new URL("https://hacker-news.firebaseio.com/v0/item/"+articleId+".json?print=pretty");
+//                    Log.i("URL for Check", url.toString());
                     httpURLConnection = (HttpURLConnection) url.openConnection();
                     inputStream = httpURLConnection.getInputStream();
                     inputStreamReader = new InputStreamReader(inputStream);
@@ -86,7 +88,19 @@ public class MainActivity extends AppCompatActivity {
                         data = inputStreamReader.read();
                     }
 
-                    Log.i("Article Info", articleInfo);
+//                    Log.i("Article Info", articleInfo);
+                    JSONObject jsonObject = new JSONObject(articleInfo);
+
+
+                        if (!jsonObject.isNull("title") && !jsonObject.isNull("url")) {
+                            String articleTitle = jsonObject.getString("title");
+                            String articleUrl = jsonObject.getString("url");
+
+                        Log.i("Title and URL", articleTitle+" "+articleUrl);
+
+                    }else{
+                        Log.i("Title and URL", "nothing found!");
+                    }
                 }
 
 //                Log.i("URL Content", result );
