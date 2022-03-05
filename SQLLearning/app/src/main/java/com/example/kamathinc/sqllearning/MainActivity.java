@@ -65,24 +65,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try{
-            SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("users", MODE_PRIVATE, null);
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INT (3))");
+            SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("awesomeusers", MODE_PRIVATE, null);
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS awesomeusers (name VARCHAR, age INT (3), id INTEGER  PRIMARY KEY )");
 
-            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shwetha', 28) ");
-            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shreya', 18) ");
-            sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Maya', 20) ");
+            sqLiteDatabase.execSQL("INSERT INTO awesomeusers (name, age,id) VALUES ('Shwetha', 28,1) ");
+            sqLiteDatabase.execSQL("INSERT INTO awesomeusers (name, age,id) VALUES ('Shreya', 18,2) ");
+            sqLiteDatabase.execSQL("INSERT INTO awesomeusers (name, age,id) VALUES ('Maya', 20,3) ");
 
             sqLiteDatabase.execSQL("DELETE FROM user WHERE name = 'Maya' ");
-            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE name LIKE  '%e%' LIMIT 1",null);
+            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM awesomeusers",null);
 
             int movieNameIndex = newCursor.getColumnIndex("name");
             int movieYearIndex = newCursor.getColumnIndex("age");
+            int idIndex = newCursor.getColumnIndex("id");
 
             newCursor.moveToFirst();
 
             while(newCursor!= null){
                 Log.i("SQL Query Movie ", newCursor.getString(movieNameIndex));
                 Log.i("SQL Query release year", newCursor.getString(movieYearIndex));
+                Log.i("SQL Query id", newCursor.getString(idIndex));
                 newCursor.moveToNext();
             }
 
