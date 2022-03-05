@@ -1,6 +1,7 @@
 package com.example.kamathinc.mynewsreader;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
@@ -24,6 +25,8 @@ import javax.net.ssl.HttpsURLConnection;
 public class MainActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> newsTitles = new ArrayList<String>();
+    ArrayList<String> newUrls = new ArrayList<String>();
+
     ArrayAdapter arrayAdapter;
 
     SQLiteDatabase articleStorage;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, newsTitles);
 
         listView.setAdapter(arrayAdapter);
+        updateListView();
 
         DownloadTask downloadTask = new DownloadTask();
         try{
@@ -49,6 +53,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void updateListView(){
+
+        Cursor c = articleStorage.rawQuery("SELECT * FROM articles", null);
+
+        int urlIndex = c.getColumnIndex("articleURL");
+        int titleIndex = c.getColumnIndex("articleTitle");
+
+        if(c.moveToFirst()){
+            newsTitles.clear();
+            newUrls.clear();
+
+            do{
+                newsTitles.add(c.getString(titleIndex));
+                newUrls.add(c.getString(urlIndex));
+
+            }while(c.moveToFirst());
+
+            arrayAdapter.notifyDataSetChanged();
+
+        }
+    }
+
 
     public class DownloadTask extends AsyncTask<String, Void, String>{
 
@@ -74,12 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 JSONArray jsonArray = new JSONArray(result);
-                int articleLimit = 5;
+                int articleLimit = 17;
 
-                if (jsonArray.length() < 5 ){
+                if (jsonArray.length() < 17 ){
                     articleLimit = jsonArray.length();
                 }
-
+                articleStorage.execSQL("DELETE FROM articles"); //clearing
                 for (int  i =0 ; i < articleLimit;  i++){
                     String articleId = jsonArray.getString(i);
                     url = new URL("https://hacker-news.firebaseio.com/v0/item/"+articleId+".json?print=pretty");
@@ -135,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            updateListView();
         }
     }
 }
