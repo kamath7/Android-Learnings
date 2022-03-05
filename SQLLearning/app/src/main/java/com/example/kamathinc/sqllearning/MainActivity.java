@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shwetha', 28) ");
             sqLiteDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Shreya', 18) ");
 
-            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE age > 18",null);
+            Cursor newCursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE name = 'Shwetha'",null);
 
             int movieNameIndex = newCursor.getColumnIndex("name");
             int movieYearIndex = newCursor.getColumnIndex("age");
