@@ -14,4 +14,12 @@ fun main() {
     var pi: Float = 3.14F
 
     println(myRadius * myRadius * pi)
+
+    var myAge = 25
+
+    var someConst = 40
+
+    myAge += someConst
+
+    println("Age in 40 years will be $myAge")
 }
