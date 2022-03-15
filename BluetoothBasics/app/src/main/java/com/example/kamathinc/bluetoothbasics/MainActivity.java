@@ -10,20 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     TextView textView;
     Button searchBtn;
+
+    ArrayList<String> deviceList = new ArrayList<>() ;
+    ArrayAdapter arrayAdapter;
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.i("BLUETOOTH_ACTION", action);
+//            Log.i("BLUETOOTH_ACTION", action);
 
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 textView.setText("Finished");
@@ -33,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 String name = bluetoothDevice.getName();
                 String address = bluetoothDevice.getAddress();
                 String rssi = Integer.toString(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
-                Log.i("BLUETOOTH_ACTION", "Device name: "+name +" Device Address: "+address+" RSSI: "+rssi);
+//                Log.i("BLUETOOTH_ACTION", "Device name: "+name +" Device Address: "+address+" RSSI: "+rssi);
+                if(name.equals("")){
+                    deviceList.add(address+" | RSSI - "+rssi+"dBm");
+                }else{
+                    deviceList.add(name+" | RSSI - "+rssi+"dBm");
+                }
+                arrayAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -55,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         textView = findViewById(R.id.statusTextView);
         searchBtn = findViewById(R.id.searchButton);
+
+        arrayAdapter= new ArrayAdapter(this, android.R.layout.simple_list_item_1, deviceList);
+        listView.setAdapter(arrayAdapter);
+
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
