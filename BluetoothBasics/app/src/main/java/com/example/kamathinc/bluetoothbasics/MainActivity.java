@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 String address = bluetoothDevice.getAddress();
                 String rssi = Integer.toString(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
 //                Log.i("BLUETOOTH_ACTION", "Device name: "+name +" Device Address: "+address+" RSSI: "+rssi);
-                if(name.equals("")){
+                if(name == null || name.equals("")){
                     deviceList.add(address+" | RSSI - "+rssi+"dBm");
                 }else{
                     deviceList.add(name+" | RSSI - "+rssi+"dBm");
