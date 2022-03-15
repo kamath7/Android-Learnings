@@ -19,21 +19,32 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     TextView textView;
     Button searchBtn;
-
-    BluetoothAdapter bluetoothAdapter;
-
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.i("BLUETOOTH_ACTION", action);
+
+            if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                textView.setText("Finished");
+                searchBtn.setEnabled(true);
+            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String name = bluetoothDevice.getName();
+                String address = bluetoothDevice.getAddress();
+                String rssi = Integer.toString(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
+                Log.i("BLUETOOTH_ACTION", "Device name: "+name +" Device Address: "+address+" RSSI: "+rssi);
+            }
         }
     };
-    public void searchBT(View view){
+    BluetoothAdapter bluetoothAdapter;
+
+    public void searchBT(View view) {
         textView.setText("Searching ...");
         searchBtn.setEnabled(false);
-    }
+        bluetoothAdapter.startDiscovery();
 
+    }
 
 
     @Override
@@ -55,6 +66,5 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(broadcastReceiver, intentFilter);
 
-        bluetoothAdapter.startDiscovery();
     }
 }
