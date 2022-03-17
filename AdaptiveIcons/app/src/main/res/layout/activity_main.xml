@@ -10,9 +10,20 @@
         android:id="@+id/autoCompleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints="AUTOFILL_HINT_USERNAME"
         android:text="AutoCompleteTextView"
         tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="247dp"
-        android:autofillHints="AUTOFILL_HINT_USERNAME"
-        />
+        tools:layout_editor_absoluteY="247dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:onClick="goPip"
+        android:text="Something"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
 </android.support.constraint.ConstraintLayout>
