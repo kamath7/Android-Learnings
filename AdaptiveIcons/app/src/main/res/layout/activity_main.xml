@@ -12,5 +12,7 @@
         android:layout_height="wrap_content"
         android:text="AutoCompleteTextView"
         tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="247dp" />
+        tools:layout_editor_absoluteY="247dp"
+        android:autofillHints="AUTOFILL_HINT_USERNAME"
+        />
 </android.support.constraint.ConstraintLayout>
