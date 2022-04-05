@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button searchBtn;
 
     ArrayList<String> deviceList = new ArrayList<>() ;
+    ArrayList<String> deviceAddress = new ArrayList<>();
     ArrayAdapter arrayAdapter;
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -39,13 +40,21 @@ public class MainActivity extends AppCompatActivity {
                 String name = bluetoothDevice.getName();
                 String address = bluetoothDevice.getAddress();
                 String rssi = Integer.toString(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
+                //to avoid repetition
+
+                if(!deviceAddress.contains(address)){
+                    deviceAddress.add(address);
+                    String deviceString = "";
 //                Log.i("BLUETOOTH_ACTION", "Device name: "+name +" Device Address: "+address+" RSSI: "+rssi);
-                if(name == null || name.equals("")){
-                    deviceList.add(address+" | RSSI - "+rssi+"dBm");
-                }else{
-                    deviceList.add(name+" | RSSI - "+rssi+"dBm");
+                    if(name == null || name.equals("")){
+
+                        deviceString = address+" | RSSI - "+rssi+"dBm";
+                    }else{
+                        deviceString = name+" | RSSI - "+rssi+"dBm";
+                    }
+                    deviceList.add(deviceString);
+                    arrayAdapter.notifyDataSetChanged();
                 }
-                arrayAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -54,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public void searchBT(View view) {
         textView.setText("Searching ...");
         searchBtn.setEnabled(false);
+        deviceList.clear();
+        deviceAddress.clear();
         bluetoothAdapter.startDiscovery();
 
     }
