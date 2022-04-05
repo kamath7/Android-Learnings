@@ -14,8 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import android.R.attr.password
 import android.util.Log
 import android.R.attr.password
-
-
+import android.content.Intent
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +47,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun login(){
-
+        val intent = Intent(this, SnapsActivity::class.java)
+        startActivity(intent)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
