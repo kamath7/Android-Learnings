@@ -3,21 +3,35 @@ package com.example.kamathinc.tattichat
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 class CreateSnapActivity : AppCompatActivity() {
 
     var createSnapImageView: ImageView? = null
     var messageEditText: EditText? = null
 
+    val imageName = UUID.randomUUID().toString()+".jph"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_snap)
+
+        createSnapImageView = findViewById(R.id.createSnap)
+        messageEditText = findViewById(R.id.messageText)
 
     }
 
@@ -58,5 +72,27 @@ class CreateSnapActivity : AppCompatActivity() {
                 getPhoto()
             }
         }
+    }
+
+    fun nextClicked(view:View){
+        createSnapImageView?.setDrawingCacheEnabled(true)
+        createSnapImageView?.buildDrawingCache()
+        val bitmap = createSnapImageView?.getDrawingCache()
+        val baos = ByteArrayOutputStream()
+
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100 ,baos)
+        val data = baos.toByteArray()
+
+
+        val uploadTask = FirebaseStorage.getInstance().getReference().child("images").child(imageName).putBytes(data)
+        uploadTask.addOnFailureListener(OnFailureListener {
+
+            Toast.makeText(this, "Upload unsuccessful ", Toast.LENGTH_SHORT).show()
+        }).addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+
+            val downloadUrl = taskSnapshot.downloadUrl
+
+            Log.i("URL", downloadUrl.toString())
+        })
     }
 }
