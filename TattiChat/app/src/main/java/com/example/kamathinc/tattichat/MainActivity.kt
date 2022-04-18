@@ -15,6 +15,7 @@ import android.R.attr.password
 import android.util.Log
 import android.R.attr.password
 import android.content.Intent
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         mAuth.createUserWithEmailAndPassword(emailText?.text.toString(), passwordText?.text.toString()).addOnCompleteListener(this){ task ->
                             if(task.isSuccessful){
+
+                                FirebaseDatabase.getInstance().getReference().child("users").child(task.result.user.uid).child("email").setValue(emailText?.text.toString())
+
                                //Add user to db
                                 login()
                             }else{
