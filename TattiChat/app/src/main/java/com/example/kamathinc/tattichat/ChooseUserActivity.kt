@@ -53,11 +53,14 @@ class ChooseUserActivity : AppCompatActivity() {
         })
             chooseUserListView?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
-                val snapMap : Map<String,String> = mapOf("from" to FirebaseAuth.getInstance().currentUser!!.email!!,"imageName" to "", "imageURL" to "", "message" to "")
+                val snapMap : Map<String,String> = mapOf("from" to FirebaseAuth.getInstance().currentUser!!.email!!,"imageName" to intent.getStringExtra("imageName"), "imageURL" to intent.getStringExtra("imageURL") , "message" to intent.getStringExtra("message"))
 
                 FirebaseDatabase.getInstance().getReference().child("users").child(keys.get(position)).child("snaps").push().setValue(snapMap)
 
                 val intent = Intent (this, SnapsActivity::class.java)
+                intent.putExtra("imageURL",downloadUrl.toString())
+                intent.putExtra("imageName",imageName)
+                intent.putExtra("message",messageEditText.text.toString())
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
